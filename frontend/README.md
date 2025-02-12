@@ -49,13 +49,42 @@ export default tseslint.config({
 })
 ```
 
-créer projet frontend npm create vite@latest frontend --template react-ts
+créer projet frontend :
+
+npm create vite@latest frontend --template react-ts
 
 lancer react
 cd frontend
 npm install (uniquement après installation)
 npm run dev
 
+installer tailwindCSS :
+
+cd frontend
+npm install -D tailwindcss@3.0.24 postcss autoprefixer
+npx tailwindcss init -p
+
+on modifie le fichier index.css
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 on visualise à http://localhost:5173/
 
 si souci il faut renommer en postccs.config.cjs (.js à la base) et idem pour tailwind.config.js
+
+
+créer projet backend :
+cd backend
+npm init
+dans les options, on laisse tous à défaut sauf entry point qui est server.js, fichier que l'on créera
+
+on installe nodemon : npm install -g nodemon
+
+dans le dossier backend, on lance le backend avec nodemon server (mise à jour en temps réel)
+
+puis on installe express : npm install express
+
+puis npm install mongoose (pour communiquer avec mongoDB)
