@@ -15,7 +15,7 @@ router.use((req, res, next) => {
 const productsController = require('../controllers/products');
 // const auth = require('../middleware/auth');
 
-router.post('/', productsController.createProduct);
+router.post('/create', productsController.createProduct);
 
 //   router.post('/', (req, res, next) => {
 //     delete req.body._id;
@@ -48,11 +48,11 @@ router.post('/', productsController.createProduct);
 //     ];
 //     res.status(200).json(stuff);
 //   });
-router.get('/get', productsController.getAllProducts);
+router.post('/get', productsController.getAllProducts);
 
-router.get('/:id', productsController.getOneProduct);
-router.put('/:id', productsController.modifyProduct );
+// router.get('/:id', productsController.getOneProduct);
+router.put('/update', productsController.modifyProduct );
 
-  router.delete('/:id', productsController.deleteProduct);
+router.delete('/delete', productsController.deleteProduct);
 
 module.exports = router;
