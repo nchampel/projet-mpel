@@ -18,6 +18,7 @@ function Products() {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [limit, setLimit] = useState<number>(5);
   const [open, setOpen] = useState<boolean>(false);
+  const [productId, setProductId] = useState<string>("");
 
   const getProducts = useCallback(async () => {
     try {
@@ -52,26 +53,33 @@ function Products() {
   // };
 
   const handleDeleteProduct = (id: string) => {
-    console.log(id);
     setOpen(true);
+    setProductId(id);
   };
+
+  // useEffect(() => {
+  //   console.log(productId);
+  // }, [productId]);
 
   return (
     <>
+      <DialogConfirmDeleteProduct
+        id={productId}
+        // setProductId={setProductId}
+        open={open}
+        setOpen={setOpen}
+        products={products}
+        setProducts={setProducts}
+      />
       {products.map((product) => {
         return (
-          <div key={product._id}>
-            <DialogConfirmDeleteProduct
-              id={product._id}
-              open={open}
-              setOpen={setOpen}
-              products={products}
-              setProducts={setProducts}
-            />
-            <Typography>{product.nom}</Typography>
+          <div key={product._id} className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
             {product.image !== "" && (
-              <img src={product.image} alt={product.nom}></img>
+              <img src={product.image} alt={product.nom} className="w-full h-48 object-cover"></img>
             )}
+            <div className="p-5">
+
+            <Typography className="text-xl font-bold text-gray-900 dark:text-white">{product.nom}</Typography>
             <Typography>{product.description}</Typography>
             <Typography>{product.prix} €</Typography>
             <Typography>Stock : {product.stock}</Typography>
@@ -89,6 +97,7 @@ function Products() {
             >
               Supprimer
             </Button>
+            </div>
             {/* <Link
           component={RouterLink}
           underline="none"

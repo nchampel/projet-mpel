@@ -18,6 +18,10 @@ interface DialogConfirmDeleteProductProps {
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>
 }
 
+type DeleteOK = {
+    message: string
+}
+
 function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
   const { id, open, setOpen, products, setProducts } = props;
   
@@ -26,7 +30,7 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
   };
   const handleDeleteProduct = useCallback(async () => {
     try {
-      const deleteOK = await productApi.deleteProduct(
+      const deleteOK: DeleteOK = await productApi.deleteProduct(
         id
         // checkLocalStorage("jwt").replaceAll('"', "")
       );
@@ -38,7 +42,7 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
     } catch (err) {
       console.error(err);
     }
-  }, []);
+  }, [id]);
 
   return (
     <Dialog
