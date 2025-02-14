@@ -7,16 +7,19 @@ import Products from './pages/products'
 import { Route, Routes } from 'react-router-dom'
 import ProductCreate from './pages/productCreate'
 import ProductUpdate from './pages/productUpdate'
+import Header from './components/header'
 
 function App() {
   // const [count, setCount] = useState(0);
 
   return (
-    <>
-      <Typography variant="h5" className="mb-2 font-semibold text-gray-800">
-          Bienvenue dans l'application de gestion de produits
-        </Typography>
+    // <div>
+    <div className="h-screen flex flex-col">
+        <Header />
         {/* <Login /> */}
+      {/* <div> */}
+      <div className="flex-grow flex">
+      {/* <div className="flex-1 overflow-y-auto"> */}
         <Routes>
           
         <Route
@@ -38,8 +41,8 @@ function App() {
               }
             ></Route>
         </Routes>
-        
-        </>
+        </div>
+        </div>
   )
 }
 

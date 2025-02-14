@@ -6,7 +6,7 @@ import { productApi } from '../api/productApi';
 import { Product } from '../types/product';
 
 interface ProductProps {
-  product: Product
+  product: Product;
 }
 
 function ProductUpdateForm(props: ProductProps) {
@@ -65,7 +65,7 @@ function ProductUpdateForm(props: ProductProps) {
                       display: "flex",
                       flexDirection: "column",
                       justifyContent: "center",
-                      height: "100vh",
+                      // height: "100vh",
                     }}
                   >
                     <Grid2

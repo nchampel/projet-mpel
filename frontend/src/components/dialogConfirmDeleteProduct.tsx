@@ -11,11 +11,11 @@ import { productApi } from "../api/productApi";
 import { Product } from "../types/product";
 
 interface DialogConfirmDeleteProductProps {
-  id: string
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  products: Product[]
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+  id: string;
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 }
 
 type DeleteOK = {

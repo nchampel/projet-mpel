@@ -1,4 +1,3 @@
-import { Link, Divider, Typography, Button } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -7,10 +6,12 @@ import { productApi } from "../api/productApi";
 import { Product, ProductDB } from "../types/product";
 import Pagination from "../components/pagination";
 import DialogConfirmDeleteProduct from "../components/dialogConfirmDeleteProduct";
+import Loader from "../components/loader";
+import ProductsList from "../components/productsList";
 
 function Products() {
   const isMounted = useMounted();
-  const navigate = useNavigate();
+
   const [products, setProducts] = useState<Product[]>([
     { _id: "1", nom: "", description: "", image: "", prix: 1, stock: 5 },
   ]);
@@ -19,9 +20,11 @@ function Products() {
   const [limit, setLimit] = useState<number>(5);
   const [open, setOpen] = useState<boolean>(false);
   const [productId, setProductId] = useState<string>("");
+  const [loading, setLoading] = useState(false);
 
   const getProducts = useCallback(async () => {
     try {
+      setLoading(true);
       const productsDB: ProductDB = await productApi.getProducts(
         page,
         limit
@@ -33,6 +36,7 @@ function Products() {
       if (isMounted()) {
         setProducts(productsDB.products);
         setTotalPages(productsDB.totalPages);
+        setLoading(false);
       }
     } catch (err) {
       console.error(err);
@@ -62,7 +66,7 @@ function Products() {
   // }, [productId]);
 
   return (
-    <>
+    <div className="flex flex-col flex-grow items-center justify-center">
       <DialogConfirmDeleteProduct
         id={productId}
         // setProductId={setProductId}
@@ -71,46 +75,14 @@ function Products() {
         products={products}
         setProducts={setProducts}
       />
-      {products.map((product) => {
-        return (
-          <div key={product._id} className="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-            {product.image !== "" && (
-              <img src={product.image} alt={product.nom} className="w-full h-48 object-cover"></img>
-            )}
-            <div className="p-5">
-
-            <Typography className="text-xl font-bold text-gray-900 dark:text-white">{product.nom}</Typography>
-            <Typography>{product.description}</Typography>
-            <Typography>{product.prix} €</Typography>
-            <Typography>Stock : {product.stock}</Typography>
-            <Button
-              onClick={() => {
-                navigate("/product/update", { state: { product } });
-              }}
-            >
-              Mettre à jour
-            </Button>
-            <Button
-              onClick={() => {
-                handleDeleteProduct(product._id);
-              }}
-            >
-              Supprimer
-            </Button>
-            </div>
-            {/* <Link
-          component={RouterLink}
-          underline="none"
-          // sx={{ marginBottom: "20px", color: "black" }}
-          // sx={linkStyles('help')}
-          to="/product/update"
-        >
-          Mettre à jour
-        </Link> */}
-            <Divider />
-          </div>
-        );
-      })}
+      {!loading ? (
+        <ProductsList
+          products={products}
+          handleDeleteProduct={handleDeleteProduct}
+        />
+      ) : (
+        <Loader />
+      )}
       {/* <FormControl className="w-64">
       <InputLabel id="dropdown-limit">Choisir une option</InputLabel>
       <Select
@@ -142,16 +114,7 @@ function Products() {
         setLimit={setLimit}
         totalPages={totalPages}
       />
-      <Link
-        component={RouterLink}
-        underline="none"
-        // sx={{ marginBottom: "20px", color: "black" }}
-        // sx={linkStyles('help')}
-        to="/product/create"
-      >
-        Créer un produit
-      </Link>
-    </>
+    </div>
   );
 }
 

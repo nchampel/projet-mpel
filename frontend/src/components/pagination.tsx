@@ -1,11 +1,11 @@
 import { Button, MenuItem, Select } from "@mui/material";
 
 interface PaginationProps {
-  totalPages: number
-  page: number
-  setPage: React.Dispatch<React.SetStateAction<number>>
-  limit: number
-  setLimit: React.Dispatch<React.SetStateAction<number>>
+  totalPages: number;
+  page: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
+  limit: number;
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function Pagination(props: PaginationProps) {
@@ -18,12 +18,17 @@ function Pagination(props: PaginationProps) {
       setPage(newPage);
     }
   };
+  
 
   return (
-    <div className="flex flex-col items-center space-y-4">
+    <div className="flex items-center justify-center mt-4">
       <Select
         value={limit}
-        onChange={(event) => setLimit(Number(event.target.value))}
+        onChange={
+          (event) => {
+            setLimit(Number(event.target.value));
+            setPage(1);
+          }}
         className="w-32"
       >
         {productsPerPageOptions.map((size) => (
@@ -40,7 +45,7 @@ function Pagination(props: PaginationProps) {
         >
           Précédent
         </Button>
-        <span>
+        <span className="mt-1">
           Page {page} sur {totalPages}
         </span>
         <Button
