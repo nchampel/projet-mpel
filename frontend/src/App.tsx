@@ -1,5 +1,3 @@
-// import { useState } from 'react'
-
 import "./App.css";
 import Login from "./components/user/loginForm";
 import Products from "./pages/product/products";
@@ -12,16 +10,11 @@ import PrivateRoute from "./components/privateRoute";
 import LogOut from "./pages/logout";
 
 function App() {
-  // const [count, setCount] = useState(0);
 
   return (
-    // <div>
     <div className="h-screen flex flex-col">
       <Header />
-      {/* <Login /> */}
-      {/* <div> */}
       <div className="flex-grow flex">
-        {/* <div className="flex-1 overflow-y-auto"> */}
         <Routes>
           <Route path={"/"} element={<Products />}></Route>
           <Route path={"/login"} element={<Login />}></Route>

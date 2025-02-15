@@ -1,6 +1,29 @@
 const yup = require("yup");
+const winston = require('winston');
 
 const Product = require('../models/Product');
+
+const date = new Date();
+
+const year = date.getFullYear().toString();
+const month = (date.getMonth() + 1).toString().padStart(2, '0');
+const day = date.getDate().toString().padStart(2, '0');
+const hours = date.getHours().toString().padStart(2, '0');
+const minutes = date.getMinutes().toString().padStart(2, '0');
+const seconds = date.getSeconds().toString().padStart(2, '0');
+
+// const logStart = `${req.method} ${req.url} ${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+const logStart = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+
+const logger = winston.createLogger({
+  level: 'info',
+  // format: winston.format.json(),
+  format: winston.format.simple(),
+  transports: [
+      new winston.transports.Console(),
+      new winston.transports.File({ filename: `logs/${year}/${month}/${year}_${month}_${day}.log` })
+  ]
+});
 
 exports.createProduct = async (req, res, next) => {
     // delete req.body._id;
@@ -130,6 +153,10 @@ exports.deleteProduct = (req, res, next) => {
 
   // exports.getAllProducts = (req, res, next) => {
   exports.getAllProducts = async (req, res, next) => {
+
+    
+  // logger.info(`Request: ${req.method} ${req.url}`);
+  logger.info(`${req.method} ${req.url} ${logStart} Les produits ont bien été récupérés`);
     // console.log(req.body.page);
       // Product.find()
       //   .then(things => res.status(200).json(things))
@@ -139,6 +166,7 @@ exports.deleteProduct = (req, res, next) => {
         const page = parseInt(req.body.page);
         const limit = parseInt(req.body.limit);
         const skip = (page - 1) * limit;
+        const b = a + 1;
 
         const products = await Product.find().skip(skip).limit(limit);
         const totalProducts = await Product.countDocuments(); // Nombre total de produits
@@ -151,6 +179,7 @@ exports.deleteProduct = (req, res, next) => {
             products: products
         });
     } catch (err) {
+      logger.error(`${req.method} ${req.url} ${logStart} Les produits n'ont pas été récupérés`)
         res.status(500).json({ error: err.message });
     }
     };

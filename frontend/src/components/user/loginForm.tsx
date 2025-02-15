@@ -113,16 +113,6 @@ function LoginForm() {
                         Se connecter
                       </Button>
                     </Grid2>
-                    {/* <Grid2
-                      // item
-                      // xs={1}
-                      sx={{ mb: 1 }}
-                    >
-                      <Link component={RouterLink} underline="none" to="/register">
-                        S'inscrire
-                      </Link>
-                    </Grid2>
-                     */}
               </Grid2>
                 </form>
               )}
