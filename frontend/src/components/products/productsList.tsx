@@ -1,8 +1,7 @@
 import { Button } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Product } from "../../types/product";
-
+import { useAuth } from "../../context/AuthContext";
 interface ProductsListProps {
     products: Product[];
     handleDeleteProduct: (id: string) => void;
@@ -11,6 +10,7 @@ interface ProductsListProps {
 const ProductsList = (props: ProductsListProps) => {
     const { products, handleDeleteProduct } = props
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     return (
         <div className="flex mt-5 flex-wrap justify-center gap-4">
@@ -44,6 +44,8 @@ const ProductsList = (props: ProductsListProps) => {
                   <p className="whitespace-nowrap">Stock : {product.stock}</p>
                 </div>
               </div>
+              {user && (
+
               <div className="mt-10">
                 <Button
                   onClick={() => {
@@ -60,6 +62,7 @@ const ProductsList = (props: ProductsListProps) => {
                   Supprimer
                 </Button>
               </div>
+        )}
               {/* <Link
           component={RouterLink}
           underline="none"

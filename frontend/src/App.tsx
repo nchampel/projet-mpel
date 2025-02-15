@@ -8,6 +8,8 @@ import ProductCreate from "./pages/productCreate";
 import ProductUpdate from "./pages/productUpdate";
 import Header from "./components/header";
 import Signup from "./components/user/signupForm";
+import PrivateRoute from "./components/privateRoute";
+import LogOut from "./pages/logout";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -22,10 +24,14 @@ function App() {
         {/* <div className="flex-1 overflow-y-auto"> */}
         <Routes>
           <Route path={"/"} element={<Products />}></Route>
-          <Route path={"/product/create"} element={<ProductCreate />}></Route>
-          <Route path={"/product/update"} element={<ProductUpdate />}></Route>
           <Route path={"/login"} element={<Login />}></Route>
           <Route path={"/signup"} element={<Signup />}></Route>
+            <Route path={"/logout"} element={<LogOut />}></Route>
+          
+          <Route element={<PrivateRoute />}>
+            <Route path={"/product/create"} element={<ProductCreate />}></Route>
+            <Route path={"/product/update"} element={<ProductUpdate />}></Route>
+          </Route>
         </Routes>
       </div>
     </div>

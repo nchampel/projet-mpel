@@ -45,3 +45,33 @@ exports.login = (req, res, next) => {
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+exports.checkAuth = async (req, res) => {
+  const token = req.header("Authorization")?.replace("Bearer ", "");
+
+  if (!token) {
+    return res
+      .status(401)
+      .json({ message: "Aucun token d'authentification" });
+  }
+
+  try {
+    // 2. Vérifier et décoder le token JWT
+    const decodedToken = jwt.verify(token, "eRtgYHju@1524FGtrX");
+
+    // 3. Trouver l'utilisateur par son ID
+    const userDB = await User.findById(decodedToken.userId);
+
+    const user = userDB._id;
+
+    // 4. Si l'utilisateur n'est pas trouvé
+    if (!user) {
+      return res.status(404).json({ message: "Utilisateur non trouvé." });
+    }
+
+    // 5. Si tout est bon, renvoyer l'utilisateur
+    return res.status(200).json({ user });
+  } catch (err) {
+    return res.status(401).json({ message: "Token invalide ou expiré." });
+  }
+};
