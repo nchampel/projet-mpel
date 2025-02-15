@@ -1,24 +1,29 @@
-import { Link } from "@mui/material";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Header() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
 
   // if (!user) {
   //   return <Navigate to="/login" replace />;
   // }
+
+  const redirect = (path:string ) => {
+    navigate(path);
+  }
   
 
-  const redirectHome = () => {
-    navigate("/");
+  
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    setUser(null);
   };
 
   return (
     <div className="flex justify-between items-center bg-white pb-4 pt-4 h-16 shadow-2xl">
       <button
-        onClick={redirectHome}
+        onClick={() => redirect("/")}
         className="font-semibold text-gray-800 text-3xl ml-5"
       >
         PROJET
@@ -28,56 +33,38 @@ function Header() {
       </p>
       <div className="flex gap-8 mr-5">
         {user && (
-
-        <Link
-          component={RouterLink}
-          underline="none"
-          // className="!mb-5"
-          className="uppercase"
-          // sx={{ marginTop: "20px" }}
-          // sx={linkStyles('help')}
-          to="/product/create"
+          <button
+          onClick={() => redirect("/product/create")}
+          className="font-semibold text-blue-800 uppercase"
         >
           Créer un produit
-        </Link>
+        </button>
+
+        
         )}
         {!user ? (
           <>
-        <Link
-          component={RouterLink}
-          underline="none"
-          // className="!mb-5"
-          className="uppercase"
-          // sx={{ marginTop: "20px" }}
-          // sx={linkStyles('help')}
-          to="/signup"
+          <button
+          onClick={() => redirect("/signup")}
+          className="font-semibold text-blue-800 uppercase"
         >
           S'inscrire
-        </Link>
-        <Link
-          component={RouterLink}
-          underline="none"
-          // className="!mb-5"
-          className="uppercase"
-          // sx={{ marginTop: "20px" }}
-          // sx={linkStyles('help')}
-          to="/login"
+        </button>
+        <button
+          onClick={() => redirect("/login")}
+          className="font-semibold text-blue-800 uppercase"
         >
           Se connecter
-        </Link>
+        </button>
+        
           </>
         ) : (
-          <Link
-          component={RouterLink}
-          underline="none"
-          // className="!mb-5"
-          className="uppercase"
-          // sx={{ marginTop: "20px" }}
-          // sx={linkStyles('help')}
-          to="/logout"
+          <button
+          onClick={handleLogout}
+          className="font-semibold text-blue-800 uppercase"
         >
           Déconnexion
-        </Link>
+        </button>
         )}
         {/* <Button
                   onClick={() => {

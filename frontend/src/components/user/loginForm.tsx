@@ -10,10 +10,11 @@ interface UserDB {
   token: string;
 }
 
-function Login() {
+function LoginForm() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
     return (
+      <div className="flex flex-col flex-grow items-center justify-center">
         <Formik
               initialValues={{ email: "", password: "" }}
               validationSchema={Yup.object().shape({
@@ -126,7 +127,8 @@ function Login() {
                 </form>
               )}
             </Formik>
+            </div>
     )
 }
 
-export default Login;
+export default LoginForm;

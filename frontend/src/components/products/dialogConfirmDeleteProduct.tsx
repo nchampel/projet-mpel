@@ -19,6 +19,9 @@ interface DialogConfirmDeleteProductProps {
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   causeReloadProductsList: boolean;
   setCauseReloadProductsList: React.Dispatch<React.SetStateAction<boolean>>;
+  limit: number;
+  totalPages: number;
+  setTotalPages: React.Dispatch<React.SetStateAction<number>>;
 }
 
 type DeleteOK = {
@@ -26,7 +29,9 @@ type DeleteOK = {
 }
 
 function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
-  const { id, open, setOpen, products, setProducts, causeReloadProductsList, setCauseReloadProductsList } = props;
+  const { id, open, setOpen, products, setProducts, causeReloadProductsList, setCauseReloadProductsList, limit,
+    totalPages, setTotalPages
+   } = props;
   
   const [loading, setLoading] = useState(false);
 
@@ -47,6 +52,10 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
         setCauseReloadProductsList(!causeReloadProductsList);
         setLoading(false);
         setOpen(false);
+        const newMaxPage = Math.ceil(products.length - 1 / limit);
+        if(newMaxPage !== totalPages) {
+          setTotalPages(newMaxPage);
+        }
       }
     } catch (err) {
       console.error(err);

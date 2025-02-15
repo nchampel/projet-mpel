@@ -2,10 +2,10 @@
 
 import "./App.css";
 import Login from "./components/user/loginForm";
-import Products from "./pages/products";
+import Products from "./pages/product/products";
 import { Route, Routes } from "react-router-dom";
-import ProductCreate from "./pages/productCreate";
-import ProductUpdate from "./pages/productUpdate";
+import ProductCreate from "./pages/product/productCreate";
+import ProductUpdate from "./pages/product/productUpdate";
 import Header from "./components/header";
 import Signup from "./components/user/signupForm";
 import PrivateRoute from "./components/privateRoute";

@@ -1,15 +1,20 @@
 import { useCallback, useEffect, useState } from "react";
-import { useMounted } from "../hooks/use-mounted";
-import { productApi } from "../api/productApi";
-import { Product, ProductDB } from "../types/product";
-import Pagination from "../components/pagination";
-import DialogConfirmDeleteProduct from "../components/products/dialogConfirmDeleteProduct";
-import Loader from "../components/loader";
-import ProductsList from "../components/products/productsList";
+import { useMounted } from "../../hooks/use-mounted";
+import { productApi } from "../../api/productApi";
+import { Product, ProductDB } from "../../types/product";
+import Pagination from "../../components/pagination";
+import DialogConfirmDeleteProduct from "../../components/products/dialogConfirmDeleteProduct";
+import Loader from "../../components/loader";
+import ProductsList from "../../components/products/productsList";
+import { useLocation } from "react-router-dom";
+
+type LocationState = {
+  page?: number;
+};
 
 function Products() {
   const isMounted = useMounted();
-
+  const location = useLocation();
   const [products, setProducts] = useState<Product[]>([
     { _id: "1", nom: "", description: "", image: "", prix: 1, stock: 5 },
   ]);
@@ -20,6 +25,13 @@ function Products() {
   const [productId, setProductId] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [causeReloadProductsList, setCauseReloadProductsList] = useState(false);
+
+  useEffect(() => {
+    const state = location.state as LocationState;
+    if (state?.page) {
+      setPage(state.page);
+    }
+  }, [location.state]);
 
   const getProducts = useCallback(async () => {
     try {
@@ -75,6 +87,9 @@ function Products() {
         setProducts={setProducts}
         causeReloadProductsList={causeReloadProductsList}
         setCauseReloadProductsList={setCauseReloadProductsList}
+        limit={limit}
+        totalPages={totalPages}
+        setTotalPages={setTotalPages}
       />
       {!loading ? (
         <ProductsList

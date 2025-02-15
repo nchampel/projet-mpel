@@ -2,7 +2,7 @@ const yup = require("yup");
 
 const Product = require('../models/Product');
 
-exports.createProduct = (req, res, next) => {
+exports.createProduct = async (req, res, next) => {
     // delete req.body._id;
 //     const Product = new Product({
 //       ...req.body
@@ -11,6 +11,15 @@ exports.createProduct = (req, res, next) => {
 //       .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
 //       .catch(error => res.status(400).json({ error }));
 //   });
+
+const schema = yup.object({
+  name: yup.string().min(3, "Le nom doit contenir au moins 3 caractères").required("Nom requis"),
+  description: yup.string(),
+  picture: yup.string().url("L'URL est invalide"),
+  price: yup.number().min(1, "Le prix doit être supérieur à 0").required("Prix requis"),
+  stock: yup.number().min(0, "Le prix doit être supérieur à 0").required("Stock requis"),
+});
+
 // test
   const product = new Product({
     nom: req.body.name,
@@ -27,6 +36,8 @@ exports.createProduct = (req, res, next) => {
     //     prix: 1,
     //     stock: 5
     //   });
+    await schema.validate(req.body, { abortEarly: false });
+
   product.validate().then(() => {
 
     product.save().then(
@@ -60,9 +71,11 @@ exports.modifyProduct = async (req, res, next) => {
     //   .catch(error => res.status(400).json({ error }));
 
     const schema = yup.object({
-      // nom: yup.string().required("Nom requis"),
-      nom: yup.string().min(6, "Le mot de passe doit contenir au moins 6 caractères").required("Mot de passe requis"),
-      prix: yup.number().min(1, "Le mot de passe doit contenir au moins 6 caractères").required("Mot de passe requis"),
+      name: yup.string().min(3, "Le nom doit contenir au moins 3 caractères").required("Nom requis"),
+      description: yup.string(),
+      picture: yup.string().url("L'URL est invalide"),
+      price: yup.number().min(1, "Le prix doit être supérieur à 0").required("Prix requis"),
+      stock: yup.number().min(0, "Le prix doit être supérieur à 0").required("Stock requis"),
     });
     
     const productToUpdate = {
@@ -95,13 +108,13 @@ exports.deleteProduct = (req, res, next) => {
     Product.deleteOne({ _id: req.body._id })
       .then(
         () => {
-          totalProducts--;
-          if(totalProducts !== 0) {
-            totalPages = Math.ceil(totalProducts / limit) === totalPages ? totalPages : Math.ceil(totalProducts / limit);
-          }
+          // totalProducts--;
+          // if(totalProducts !== 0) {
+          //   totalPages = Math.ceil(totalProducts / limit) === totalPages ? totalPages : Math.ceil(totalProducts / limit);
+          // }
           res.status(200).json({ 
             message: 'Objet supprimé !',
-            totalPages,
+            // totalPages,
             // n° de page
           });
         })

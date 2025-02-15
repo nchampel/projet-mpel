@@ -4,9 +4,10 @@ import * as Yup from "yup";
 import { userApi } from '../../api/userApi';
 import { useNavigate } from 'react-router-dom';
 
-function Signup() {
+function SignupForm() {
   const navigate = useNavigate();
     return (
+      <div className="flex flex-col flex-grow items-center justify-center">
         <Formik
               initialValues={{ email: "", password: "" }}
               validationSchema={Yup.object().shape({
@@ -119,7 +120,8 @@ function Signup() {
                 </form>
               )}
             </Formik>
+            </div>
     )
 }
 
-export default Signup;
+export default SignupForm;

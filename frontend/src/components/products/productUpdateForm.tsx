@@ -21,9 +21,9 @@ function ProductUpdateForm(props: ProductProps) {
               initialValues={{ name: product.nom, description: product?.description, picture: product?.image,
                 price: product.prix, stock: product.stock }}
               validationSchema={Yup.object().shape({
-                name: Yup.string().required("Un nom doit être saisi"),
+                name: Yup.string().min(3, "Le nom doit contenir au moins 3 caractères").required("Un nom doit être saisi"),
                 description: Yup.string(),
-                picture: Yup.string(),
+                picture: Yup.string().url("L'URL est invalide"),
               //   userId: { type: String, required: false },
                 price: Yup.number().required().min(1, "Le prix doit être supérieur à 0"),
                 stock: Yup.number().required().min(0, "Le prix doit être supérieur ou égal à 0"),
@@ -49,7 +49,7 @@ function ProductUpdateForm(props: ProductProps) {
                   resetForm({});
                   setSubmitting(false);
                   setLoading(false);
-                  navigate('/');
+                  navigate('/', {state: { page: 2}});
                 } catch (err) {
                   console.error(err);
                   // toast.error("Il y a eu un souci lors de l'enregistrement !");
@@ -99,6 +99,7 @@ function ProductUpdateForm(props: ProductProps) {
                         onChange={handleChange}
                         value={values.description}
                         fullWidth
+                        multiline
                         label="Description"
                         name="description"
                         variant="filled"
@@ -117,6 +118,7 @@ function ProductUpdateForm(props: ProductProps) {
                         value={values.picture}
                         fullWidth
                         label="Image"
+                        multiline
                         name="picture"
                         variant="filled"
                         // error={Boolean(touched.description && errors.description)}
