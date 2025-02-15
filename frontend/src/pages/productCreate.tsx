@@ -1,5 +1,5 @@
 import { Typography, Link } from "@mui/material";
-import ProductCreateForm from "../components/productCreateForm";
+import ProductCreateForm from "../components/products/productCreateForm";
 import { Link as RouterLink } from "react-router-dom";
 
 function ProductCreate() {

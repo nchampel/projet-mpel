@@ -2,14 +2,24 @@ import { Button, Grid2, TextField } from '@mui/material';
 import { Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
-import { productApi } from '../api/productApi';
+import { productApi } from '../../api/productApi';
+import { Product } from '../../types/product';
+import { useState } from 'react';
+import Loader from '../loader';
 
-function ProductCreateForm() {
+interface ProductProps {
+  product: Product;
+}
+
+function ProductUpdateForm(props: ProductProps) {
+  const { product } = props;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
     return (
         <Formik
-              initialValues={{ name: "", description: "", picture: "", price: 0, stock: 0 }}
+              initialValues={{ name: product.nom, description: product?.description, picture: product?.image,
+                price: product.prix, stock: product.stock }}
               validationSchema={Yup.object().shape({
                 name: Yup.string().required("Un nom doit être saisi"),
                 description: Yup.string(),
@@ -24,7 +34,8 @@ function ProductCreateForm() {
               ) => {
                 try {
                   // setIsAuthenticated(true)
-                  const jsonAnswer = await productApi.createProduct(values);
+                  setLoading(true);
+                  const jsonAnswer = await productApi.updateProduct(values, product._id);
                   // on enregistre le jwt
                   // if (jsonAnswer.authenticated) {
                   //   window.localStorage.setItem(
@@ -37,6 +48,7 @@ function ProductCreateForm() {
                   setStatus({ success: true });
                   resetForm({});
                   setSubmitting(false);
+                  setLoading(false);
                   navigate('/');
                 } catch (err) {
                   console.error(err);
@@ -151,6 +163,8 @@ function ProductCreateForm() {
                         // onBlur={(e) => e.target.value === "" && (e.target.value = "0")}
                         style={{ background: "white", width: "300px" }} />
                     </Grid2>
+                    {!loading ? (
+
                     <Grid2
                       // item
                       // xs={1}
@@ -163,9 +177,12 @@ function ProductCreateForm() {
                           handleSubmit();
                         } }
                       >
-                        Créer un produit
+                        Mettre à jour le produit
                       </Button>
                     </Grid2>
+                    ) : (
+                      <Loader />
+                    )}
                     {/* <Grid2
                       // item
                       // xs={1}
@@ -183,4 +200,4 @@ function ProductCreateForm() {
     )
 }
 
-export default ProductCreateForm;
+export default ProductUpdateForm;

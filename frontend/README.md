@@ -75,6 +75,23 @@ on visualise à http://localhost:5173/
 
 si souci il faut renommer en postccs.config.cjs (.js à la base) et idem pour tailwind.config.js
 
+pour tailwind.config.cjs
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+
+npm install mongoose-unique-validator pour authentification ( --force si nécesssaire)
+npm install bcrypt pour hashage mot de passe ( --force si nécesssaire)
+npm install jsonwebtoken
+npm install yup (pour validation)
+
+
 
 créer projet backend :
 cd backend

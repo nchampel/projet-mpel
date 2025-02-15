@@ -2,7 +2,7 @@ import { Typography, Link } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import { Product } from "../types/product";
-import ProductUpdateForm from "../components/productUpdateForm";
+import ProductUpdateForm from "../components/products/productUpdateForm";
 
 function ProductUpdate() {
   // const { product } = props;

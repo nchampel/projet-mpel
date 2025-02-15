@@ -1,4 +1,4 @@
-import { Link } from "@mui/material";
+import { Button, Link } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 function Header() {
@@ -9,27 +9,59 @@ function Header() {
   };
 
   return (
-    <div className="flex justify-around items-center bg-white pb-4 pt-4 h-16 shadow-2xl">
+    <div className="flex justify-between items-center bg-white pb-4 pt-4 h-16 shadow-2xl">
       <button
         onClick={redirectHome}
-        className="font-semibold text-gray-800 text-3xl"
+        className="font-semibold text-gray-800 text-3xl ml-5"
       >
         PROJET
       </button>
-      <p className="font-semibold text-gray-800 text-3xl">
+      <p className="absolute left-1/2 transform -translate-x-1/2 font-semibold text-gray-800 text-3xl">
         Bienvenue dans l'application de gestion de produits
       </p>
-      <Link
-        component={RouterLink}
-        underline="none"
-        // className="!mb-5"
-        className="uppercase"
-        // sx={{ marginTop: "20px" }}
-        // sx={linkStyles('help')}
-        to="/product/create"
-      >
-        Créer un produit
-      </Link>
+      <div className="flex gap-8 mr-5">
+        <Link
+          component={RouterLink}
+          underline="none"
+          // className="!mb-5"
+          className="uppercase"
+          // sx={{ marginTop: "20px" }}
+          // sx={linkStyles('help')}
+          to="/product/create"
+        >
+          Créer un produit
+        </Link>
+        <Link
+          component={RouterLink}
+          underline="none"
+          // className="!mb-5"
+          className="uppercase"
+          // sx={{ marginTop: "20px" }}
+          // sx={linkStyles('help')}
+          to="/signup"
+        >
+          S'inscrire
+        </Link>
+        <Link
+          component={RouterLink}
+          underline="none"
+          // className="!mb-5"
+          className="uppercase"
+          // sx={{ marginTop: "20px" }}
+          // sx={linkStyles('help')}
+          to="/login"
+        >
+          Se connecter
+        </Link>
+        {/* <Button
+                  onClick={() => {
+                    navigate("/product/update");
+                  }}
+                  className="text-red-500"
+                >
+                  Mettre à jour
+                </Button> */}
+      </div>
     </div>
   );
 }

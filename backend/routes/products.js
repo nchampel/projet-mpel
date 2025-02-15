@@ -2,8 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 
-const Product = require('../models/Product');
-
 router.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -13,9 +11,10 @@ router.use((req, res, next) => {
 
 
 const productsController = require('../controllers/products');
+const auth = require('../middleware/auth');
 // const auth = require('../middleware/auth');
 
-router.post('/create', productsController.createProduct);
+router.post('/create', auth, productsController.createProduct);
 
 //   router.post('/', (req, res, next) => {
 //     delete req.body._id;
@@ -51,8 +50,8 @@ router.post('/create', productsController.createProduct);
 router.post('/get', productsController.getAllProducts);
 
 // router.get('/:id', productsController.getOneProduct);
-router.put('/update', productsController.modifyProduct );
+router.put('/update', auth, productsController.modifyProduct );
 
-router.delete('/delete', productsController.deleteProduct);
+router.delete('/delete', auth, productsController.deleteProduct);
 
 module.exports = router;

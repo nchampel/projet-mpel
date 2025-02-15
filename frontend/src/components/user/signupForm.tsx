@@ -1,13 +1,16 @@
 import { Button, Grid2, TextField } from '@mui/material';
 import { Formik } from 'formik';
 import * as Yup from "yup";
+import { userApi } from '../../api/userApi';
+import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function Signup() {
+  const navigate = useNavigate();
     return (
         <Formik
-              initialValues={{ pseudo: "", password: "" }}
+              initialValues={{ email: "", password: "" }}
               validationSchema={Yup.object().shape({
-                pseudo: Yup.string().required("Un pseudo doit être saisi"),
+                email: Yup.string().email("Email invalide").required("Un email doit être saisi"),
                 password: Yup.string().required("Un mot de passe doit être saisi"),
               })}
               onSubmit={async (
@@ -16,7 +19,7 @@ function Login() {
               ) => {
                 try {
                   // setIsAuthenticated(true)
-                  // const jsonAnswer = await userApi.login(values);
+                  const jsonAnswer = await userApi.signup(values);
                   // on enregistre le jwt
                   // if (jsonAnswer.authenticated) {
                   //   window.localStorage.setItem(
@@ -29,6 +32,7 @@ function Login() {
                   setStatus({ success: true });
                   resetForm({});
                   setSubmitting(false);
+                  navigate('/');
                 } catch (err) {
                   console.error(err);
                   // toast.error("Il y a eu un souci lors de l'enregistrement !");
@@ -59,13 +63,13 @@ function Login() {
                       <TextField
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        value={values.pseudo}
+                        value={values.email}
                         fullWidth
-                        label="Pseudo"
-                        name="pseudo"
+                        label="Email"
+                        name="email"
                         variant="filled"
-                        error={Boolean(touched.pseudo && errors.pseudo)}
-                        helperText={touched.pseudo && errors.pseudo}
+                        error={Boolean(touched.email && errors.email)}
+                        helperText={touched.email && errors.email}
                         style={{ background: "white", width: "300px" }} />
                     </Grid2>
                     <Grid2
@@ -98,7 +102,7 @@ function Login() {
                           handleSubmit();
                         } }
                       >
-                        Se connecter
+                        S'enregistrer
                       </Button>
                     </Grid2>
                     {/* <Grid2
@@ -118,4 +122,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default Signup;

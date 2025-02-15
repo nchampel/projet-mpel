@@ -7,8 +7,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useCallback, useState } from "react";
-import { productApi } from "../api/productApi";
-import { Product } from "../types/product";
+import { productApi } from "../../api/productApi";
+import { Product } from "../../types/product";
+import Loader from "../loader";
 
 interface DialogConfirmDeleteProductProps {
   id: string;
@@ -16,6 +17,8 @@ interface DialogConfirmDeleteProductProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  causeReloadProductsList: boolean;
+  setCauseReloadProductsList: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 type DeleteOK = {
@@ -23,20 +26,26 @@ type DeleteOK = {
 }
 
 function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
-  const { id, open, setOpen, products, setProducts } = props;
+  const { id, open, setOpen, products, setProducts, causeReloadProductsList, setCauseReloadProductsList } = props;
   
+  const [loading, setLoading] = useState(false);
+
   const handleClose = () => {
     setOpen(false);
   };
   const handleDeleteProduct = useCallback(async () => {
     try {
+      setLoading(true);
       const deleteOK: DeleteOK = await productApi.deleteProduct(
         id
+        // , page, limit, totalPage
         // checkLocalStorage("jwt").replaceAll('"', "")
       );
       if(deleteOK.message === 'Objet supprimé !'){
         const productsTemp = products.filter((el) => el._id !== id);
         setProducts(productsTemp);
+        setCauseReloadProductsList(!causeReloadProductsList);
+        setLoading(false);
         setOpen(false);
       }
     } catch (err) {
@@ -73,6 +82,8 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
           <Typography>Voulez-vous supprimer le produit ?</Typography>
         </Grid2>
       </DialogContent>
+      {!loading ? (
+
       <DialogActions>
         <Grid2
           container
@@ -90,7 +101,10 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
           </Button>
         </Grid2>
       </DialogActions>
-    </Dialog>
+      ) : (
+        <Loader />
+      )}
+      </Dialog>
   );
 }
 

@@ -1,3 +1,5 @@
+const yup = require("yup");
+
 const Product = require('../models/Product');
 
 exports.createProduct = (req, res, next) => {
@@ -25,19 +27,22 @@ exports.createProduct = (req, res, next) => {
     //     prix: 1,
     //     stock: 5
     //   });
-  product.save().then(
-    () => {
-      res.status(201).json({
-        message: 'Produit enregistré avec succès'
-      });
-    }
-  ).catch(
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  );
+  product.validate().then(() => {
+
+    product.save().then(
+      () => {
+        res.status(201).json({
+          message: 'Produit enregistré avec succès'
+        });
+      }
+    ).catch(
+      (error) => {
+        res.status(400).json({
+          error: error
+        });
+      }
+    );
+  });
 };
 
 // exports.getOneProduct = (req, res, next) => {
@@ -46,13 +51,19 @@ exports.createProduct = (req, res, next) => {
 //     .catch(error => res.status(404).json({ error }));
 // };
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 
-exports.modifyProduct = (req, res, next) => {
+exports.modifyProduct = async (req, res, next) => {
     // Product.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
     // Product.updateOne({ _id: req.body._id }, { ...req.body, _id: req.body._id })
     //   .then(() => res.status(200).json({ message: 'Objet modifié !'}))
     //   .catch(error => res.status(400).json({ error }));
+
+    const schema = yup.object({
+      // nom: yup.string().required("Nom requis"),
+      nom: yup.string().min(6, "Le mot de passe doit contenir au moins 6 caractères").required("Mot de passe requis"),
+      prix: yup.number().min(1, "Le mot de passe doit contenir au moins 6 caractères").required("Mot de passe requis"),
+    });
     
     const productToUpdate = {
 
@@ -62,6 +73,8 @@ exports.modifyProduct = (req, res, next) => {
       prix: req.body.price,
       stock: req.body.stock
     };    
+
+    await schema.validate(req.body, { abortEarly: false });
 
 
     Product.findByIdAndUpdate(
@@ -74,10 +87,30 @@ exports.modifyProduct = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
     // Product.deleteOne({ _id: req.params.id })
-    console.log('ok');
+    // const page = parseInt(req.body.page);
+    // const limit = parseInt(req.body.limit);
+    // const totalProducts = parseInt(req.body.totalProducts);
+    // const totalPages = parseInt(req.body.totalPages);
+    
     Product.deleteOne({ _id: req.body._id })
-      .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+      .then(
+        () => {
+          totalProducts--;
+          if(totalProducts !== 0) {
+            totalPages = Math.ceil(totalProducts / limit) === totalPages ? totalPages : Math.ceil(totalProducts / limit);
+          }
+          res.status(200).json({ 
+            message: 'Objet supprimé !',
+            totalPages,
+            // n° de page
+          });
+        })
       .catch(error => res.status(400).json({ error }));
+      
+    // const total = await Product.countDocuments(); // Nombre total de produits
+
+    
+
   };
 
   // const User = require('../models/User');
@@ -95,13 +128,13 @@ exports.deleteProduct = (req, res, next) => {
         const skip = (page - 1) * limit;
 
         const products = await Product.find().skip(skip).limit(limit);
-        const total = await Product.countDocuments(); // Nombre total de produits
+        const totalProducts = await Product.countDocuments(); // Nombre total de produits
 
         res.json({
-            page,
-            limit,
-            total,
-            totalPages: Math.ceil(total / limit),
+            // page,
+            // limit,
+            // totalProducts,
+            totalPages: Math.ceil(totalProducts / limit),
             products: products
         });
     } catch (err) {

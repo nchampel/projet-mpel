@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { useMounted } from "../hooks/use-mounted";
 import { productApi } from "../api/productApi";
 import { Product, ProductDB } from "../types/product";
 import Pagination from "../components/pagination";
-import DialogConfirmDeleteProduct from "../components/dialogConfirmDeleteProduct";
+import DialogConfirmDeleteProduct from "../components/products/dialogConfirmDeleteProduct";
 import Loader from "../components/loader";
-import ProductsList from "../components/productsList";
+import ProductsList from "../components/products/productsList";
 
 function Products() {
   const isMounted = useMounted();
@@ -21,6 +19,7 @@ function Products() {
   const [open, setOpen] = useState<boolean>(false);
   const [productId, setProductId] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [causeReloadProductsList, setCauseReloadProductsList] = useState(false);
 
   const getProducts = useCallback(async () => {
     try {
@@ -41,7 +40,7 @@ function Products() {
     } catch (err) {
       console.error(err);
     }
-  }, [page, limit]);
+  }, [page, limit, causeReloadProductsList]);
 
   useEffect(() => {
     getProducts();
@@ -74,6 +73,8 @@ function Products() {
         setOpen={setOpen}
         products={products}
         setProducts={setProducts}
+        causeReloadProductsList={causeReloadProductsList}
+        setCauseReloadProductsList={setCauseReloadProductsList}
       />
       {!loading ? (
         <ProductsList

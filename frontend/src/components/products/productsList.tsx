@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { Product } from "../types/product";
+import { Product } from "../../types/product";
 
 interface ProductsListProps {
     products: Product[];
