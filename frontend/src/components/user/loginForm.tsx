@@ -3,9 +3,16 @@ import { Formik } from 'formik';
 import * as Yup from "yup";
 import { userApi } from '../../api/userApi';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+
+interface UserDB {
+  userId: string;
+  token: string;
+}
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
     return (
         <Formik
               initialValues={{ email: "", password: "" }}
@@ -19,7 +26,7 @@ function Login() {
               ) => {
                 try {
                   // setIsAuthenticated(true)
-                  const jsonAnswer = await userApi.login(values);
+                  const jsonAnswer: UserDB = await userApi.login(values);
                   // on enregistre le jwt
                   // if (jsonAnswer.authenticated) {
                     window.localStorage.setItem(
@@ -28,7 +35,7 @@ function Login() {
                     );
                     // console.log('auth')
                   
-
+                  setUser(jsonAnswer.userId);
                   setStatus({ success: true });
                   resetForm({});
                   setSubmitting(false);
