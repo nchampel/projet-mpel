@@ -1,20 +1,16 @@
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Header() {
+  console.log("useAuth() dans Header :", useAuth());
+
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
 
-  // if (!user) {
-  //   return <Navigate to="/login" replace />;
-  // }
-
-  const redirect = (path:string ) => {
+  const redirect = (path: string) => {
     navigate(path);
-  }
-  
+  };
 
-  
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     setUser(null);
@@ -34,46 +30,35 @@ function Header() {
       <div className="flex gap-8 mr-5">
         {user && (
           <button
-          onClick={() => redirect("/product/create")}
-          className="font-semibold text-blue-800 uppercase"
-        >
-          Créer un produit
-        </button>
-
-        
+            onClick={() => redirect("/product/create")}
+            className="font-semibold text-blue-800 uppercase"
+          >
+            Créer un produit
+          </button>
         )}
         {!user ? (
           <>
-          <button
-          onClick={() => redirect("/signup")}
-          className="font-semibold text-blue-800 uppercase"
-        >
-          S'inscrire
-        </button>
-        <button
-          onClick={() => redirect("/login")}
-          className="font-semibold text-blue-800 uppercase"
-        >
-          Se connecter
-        </button>
-        
+            <button
+              onClick={() => redirect("/signup")}
+              className="font-semibold text-blue-800 uppercase"
+            >
+              S'inscrire
+            </button>
+            <button
+              onClick={() => redirect("/login")}
+              className="font-semibold text-blue-800 uppercase"
+            >
+              Se connecter
+            </button>
           </>
         ) : (
           <button
-          onClick={handleLogout}
-          className="font-semibold text-blue-800 uppercase"
-        >
-          Déconnexion
-        </button>
+            onClick={handleLogout}
+            className="font-semibold text-blue-800 uppercase"
+          >
+            Déconnexion
+          </button>
         )}
-        {/* <Button
-                  onClick={() => {
-                    navigate("/product/update");
-                  }}
-                  className="text-red-500"
-                >
-                  Mettre à jour
-                </Button> */}
       </div>
     </div>
   );

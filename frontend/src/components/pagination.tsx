@@ -1,15 +1,17 @@
 import { Button, MenuItem, Select } from "@mui/material";
+import { usePage } from "../context/PageProvider";
 
 interface PaginationProps {
   totalPages: number;
-  page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  // page: number;
+  // setPage: void;
   limit: number;
   setLimit: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function Pagination(props: PaginationProps) {
-  const { totalPages, page, setPage, limit, setLimit } = props;
+  const { totalPages, limit, setLimit } = props;
+  const { page, setPage } = usePage();
   const productsPerPageOptions = [5, 10, 25];
   const pageNumberOptions = Array.from({ length: totalPages }, (_, i) => i + 1);
 
@@ -18,17 +20,15 @@ function Pagination(props: PaginationProps) {
       setPage(newPage);
     }
   };
-  
 
   return (
     <div className="flex items-center justify-center mt-4">
       <Select
         value={limit}
-        onChange={
-          (event) => {
-            setLimit(Number(event.target.value));
-            setPage(1);
-          }}
+        onChange={(event) => {
+          setLimit(Number(event.target.value));
+          setPage(1);
+        }}
         className="w-32"
       >
         {productsPerPageOptions.map((size) => (

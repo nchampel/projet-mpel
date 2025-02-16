@@ -1,18 +1,21 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
-import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from "./context/AuthContext.tsx";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App.tsx";
+import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { PageProvider } from "./context/PageProvider.tsx";
 
 const rootElement = document.getElementById("root");
 if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
       <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <PageProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </PageProvider>
       </AuthProvider>
     </StrictMode>
   );

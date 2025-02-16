@@ -15,8 +15,4 @@ const userRoutes = require('./routes/user');
 app.use('/api/products', productRoutes);
 app.use('/api/auth', userRoutes);
 
-// app.use((req, res) => {
-//    res.json({ message: 'Votre requête a bien été reçue !' }); 
-// });
-
 module.exports = app;

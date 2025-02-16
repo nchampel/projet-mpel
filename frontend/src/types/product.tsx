@@ -7,9 +7,6 @@ export type Product = {
   stock: number;
 };
 export type ProductDB = {
-  // page: number;
-  // limit: number;
-  // totalProducts: number;
   totalPages: number;
   products: Product[];
 };

@@ -26,14 +26,24 @@ interface DialogConfirmDeleteProductProps {
 }
 
 type DeleteOK = {
-    message: string
-}
+  message: string;
+};
 
 function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
-  const { id, productName, open, setOpen, products, setProducts, causeReloadProductsList, setCauseReloadProductsList, limit,
-    totalPages, setTotalPages
-   } = props;
-  
+  const {
+    id,
+    productName,
+    open,
+    setOpen,
+    products,
+    setProducts,
+    causeReloadProductsList,
+    setCauseReloadProductsList,
+    limit,
+    totalPages,
+    setTotalPages,
+  } = props;
+
   const [loading, setLoading] = useState(false);
 
   const handleClose = () => {
@@ -45,17 +55,15 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
       const deleteOK: DeleteOK = await productApi.deleteProduct(
         id,
         productName
-        // , page, limit, totalPage
-        // checkLocalStorage("jwt").replaceAll('"', "")
       );
-      if(deleteOK.message === 'Objet supprimé !'){
+      if (deleteOK.message === "Objet supprimé !") {
         const productsTemp = products.filter((el) => el._id !== id);
         setProducts(productsTemp);
         setCauseReloadProductsList(!causeReloadProductsList);
         setLoading(false);
         setOpen(false);
         const newMaxPage = Math.ceil(products.length - 1 / limit);
-        if(newMaxPage !== totalPages) {
+        if (newMaxPage !== totalPages) {
           setTotalPages(newMaxPage);
         }
       }
@@ -67,26 +75,17 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
   return (
     <Dialog
       open={open}
-      // TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
       fullWidth
       maxWidth="xl"
-      // PaperProps={{
-      //   style: {
-      //     backgroundColor: "#434A54",
-      //     color: "white",
-      //   },
-      // }}
     >
-      {/* <DialogTitle>Résultats du combat</DialogTitle> */}
       <DialogContent>
         <Grid2
           container
           justifyContent="center"
           sx={{
-            // color: "white",
             mt: 5,
           }}
         >
@@ -94,28 +93,23 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
         </Grid2>
       </DialogContent>
       {!loading ? (
-
-      <DialogActions>
-        <Grid2
-          container
-          justifyContent="center"
-          sx={{
-            // color: "white",
-            mt: 5,
-          }}
-        >
-          <Button onClick={handleDeleteProduct}>
-            Oui
-          </Button>
-          <Button onClick={handleClose}>
-            Non
-          </Button>
-        </Grid2>
-      </DialogActions>
+        <DialogActions>
+          <Grid2
+            container
+            justifyContent="center"
+            sx={{
+              // color: "white",
+              mt: 5,
+            }}
+          >
+            <Button onClick={handleDeleteProduct}>Oui</Button>
+            <Button onClick={handleClose}>Non</Button>
+          </Grid2>
+        </DialogActions>
       ) : (
         <Loader />
       )}
-      </Dialog>
+    </Dialog>
   );
 }
 
