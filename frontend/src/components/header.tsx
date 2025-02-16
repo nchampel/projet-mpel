@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Header() {
-  console.log("useAuth() dans Header :", useAuth());
 
   const navigate = useNavigate();
   const { user, setUser } = useAuth();

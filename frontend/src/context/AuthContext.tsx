@@ -34,7 +34,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try {
       setLoading(true);
       const userCheck: User = await userApi.checkAuth();
-      console.log(userCheck);
       setUser(userCheck.user);
       setLoading(false);
     } catch (err) {
