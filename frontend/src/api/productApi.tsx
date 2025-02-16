@@ -44,8 +44,8 @@ class ProductApi {
       const json = await response.json();
       return json;
     }
-    async deleteProduct(_id: string) {
-      const data = { _id };
+    async deleteProduct(_id: string, productName: string) {
+      const data = { _id, productName };
       const url = `${import.meta.env.VITE_BACKEND_URL}/api/products/delete`;
     //   const url = `${process.env.REACT_APP_BACK}/products/get/`;
       const params = getParams(data, "DELETE");

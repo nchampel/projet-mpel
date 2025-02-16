@@ -19,7 +19,7 @@ function LoginForm() {
               initialValues={{ email: "", password: "" }}
               validationSchema={Yup.object().shape({
                 email: Yup.string().email("Email invalide").required("Un email doit être saisi"),
-                password: Yup.string().required("Un mot de passe doit être saisi"),
+                password: Yup.string().min(8, "Le mot de passe doit contenir au moins 8 caractères").required("Un mot de passe doit être saisi"),
               })}
               onSubmit={async (
                 values,

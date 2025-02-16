@@ -1,0 +1,22 @@
+info: POST /get 16/02/2025 09:48:39 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 09:48:39 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 09:48:39 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 09:48:39 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 09:48:39 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 09:48:39 classe getAllProducts : Les produits ont bien été récupérés
+info: PUT /update 16/02/2025 12:00:50 classe modifyProduct : Le produit test2 a été modifié
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /create 16/02/2025 12:00:50 classe createProduct : Le produit a été créé
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: DELETE /delete 16/02/2025 12:00:50 classe deleteOne : Le produit test123 a été supprimé
+info: POST /get 16/02/2025 12:00:50 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:49:14 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 12:49:14 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /signup 16/02/2025 13:00:59 classe signup : L'utilisateur a été créé
+info: POST /get 16/02/2025 13:00:59 classe getAllProducts : Les produits ont bien été récupérés
+info: POST /get 16/02/2025 13:00:59 classe getAllProducts : Les produits ont bien été récupérés

@@ -23,6 +23,7 @@ function Products() {
   const [limit, setLimit] = useState<number>(5);
   const [open, setOpen] = useState<boolean>(false);
   const [productId, setProductId] = useState<string>("");
+  const [productName, setProductName] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [causeReloadProductsList, setCauseReloadProductsList] = useState(false);
 
@@ -67,9 +68,10 @@ function Products() {
   //   setPage(Number(event.target.value));
   // };
 
-  const handleDeleteProduct = (id: string) => {
+  const handleDeleteProduct = (id: string, name: string) => {
     setOpen(true);
     setProductId(id);
+    setProductName(name);
   };
 
   // useEffect(() => {
@@ -80,6 +82,7 @@ function Products() {
     <div className="flex flex-col flex-grow items-center justify-center">
       <DialogConfirmDeleteProduct
         id={productId}
+        productName={productName}
         // setProductId={setProductId}
         open={open}
         setOpen={setOpen}
