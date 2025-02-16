@@ -13,6 +13,7 @@ import Loader from "../loader";
 
 interface DialogConfirmDeleteProductProps {
   id: string;
+  productName: string;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   products: Product[];
@@ -29,7 +30,7 @@ type DeleteOK = {
 }
 
 function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
-  const { id, open, setOpen, products, setProducts, causeReloadProductsList, setCauseReloadProductsList, limit,
+  const { id, productName, open, setOpen, products, setProducts, causeReloadProductsList, setCauseReloadProductsList, limit,
     totalPages, setTotalPages
    } = props;
   
@@ -42,7 +43,8 @@ function DialogConfirmDeleteProduct(props: DialogConfirmDeleteProductProps) {
     try {
       setLoading(true);
       const deleteOK: DeleteOK = await productApi.deleteProduct(
-        id
+        id,
+        productName
         // , page, limit, totalPage
         // checkLocalStorage("jwt").replaceAll('"', "")
       );

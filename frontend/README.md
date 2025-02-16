@@ -90,6 +90,7 @@ npm install mongoose-unique-validator pour authentification ( --force si nécess
 npm install bcrypt pour hashage mot de passe ( --force si nécesssaire)
 npm install jsonwebtoken
 npm install yup (pour validation)
+npm install winston (pour logs)
 
 
 

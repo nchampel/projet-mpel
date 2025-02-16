@@ -19,7 +19,7 @@ function LoginForm() {
               initialValues={{ email: "", password: "" }}
               validationSchema={Yup.object().shape({
                 email: Yup.string().email("Email invalide").required("Un email doit être saisi"),
-                password: Yup.string().required("Un mot de passe doit être saisi"),
+                password: Yup.string().min(8, "Le mot de passe doit contenir au moins 8 caractères").required("Un mot de passe doit être saisi"),
               })}
               onSubmit={async (
                 values,
@@ -113,16 +113,6 @@ function LoginForm() {
                         Se connecter
                       </Button>
                     </Grid2>
-                    {/* <Grid2
-                      // item
-                      // xs={1}
-                      sx={{ mb: 1 }}
-                    >
-                      <Link component={RouterLink} underline="none" to="/register">
-                        S'inscrire
-                      </Link>
-                    </Grid2>
-                     */}
               </Grid2>
                 </form>
               )}

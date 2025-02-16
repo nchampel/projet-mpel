@@ -56,7 +56,7 @@ const ProductsList = (props: ProductsListProps) => {
                 </Button>
                 <Button
                   onClick={() => {
-                    handleDeleteProduct(product._id);
+                    handleDeleteProduct(product._id, product.nom);
                   }}
                 >
                   Supprimer
